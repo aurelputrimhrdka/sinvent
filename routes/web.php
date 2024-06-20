@@ -3,15 +3,11 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
-use App\Http\Controllers\CategoryController;
 
 Route::get('/', function () {
-    return view('login');
+    return view('welcome');
 });
 
-Route::get('/category',[CategoryController::class,'index']);
-
-Route::resource('/products', \App\Http\Controllers\ProductController::class);
 Route::resource('/kategori', \App\Http\Controllers\KategoriController::class)->middleware('auth');
 Route::resource('/barang', \App\Http\Controllers\BarangController::class)->middleware('auth');
 Route::resource('/barangmasuk', \App\Http\Controllers\BarangMasukController::class)->middleware('auth');
