@@ -98,14 +98,18 @@ class BarangController extends Controller
     {
         $rsetBarang = Barang::find($id);
 
-        // Check if stok is greater than 0 before deleting
-        if ($rsetBarang->stok > 0) {
-            return redirect()->route('barang.index')->with(['error' => 'Barang dengan stok lebih dari 0 tidak dapat dihapus!']);
-        }
-        // Delete post
-        $rsetBarang->delete();
-
-        // Redirect to index
-        return redirect()->route('barang.index')->with(['success' => 'Data Berhasil Dihapus!']);
+    // Check if stok is greater than 0 before deleting
+    if ($rsetBarang->stok > 0) {
+        return redirect()->route('barang.index')->with(['error' => 'Barang dengan stok lebih dari 0 tidak dapat dihapus!']);
     }
+
+    // Hapus semua entri di barangmasuk yang terkait dengan barang ini
+    $rsetBarang->barangmasuk()->delete();
+
+    // Delete barang
+    $rsetBarang->delete();
+
+    // Redirect to index
+    return redirect()->route('barang.index')->with(['success' => 'Data Berhasil Dihapus!']);
+}
 }

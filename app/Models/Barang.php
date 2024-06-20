@@ -10,10 +10,17 @@ class Barang extends Model
     use HasFactory;
 
     protected $table = 'barang';
-    protected $fillable = ['merk','seri','spesifikasi','kategori_id'];
+    protected $fillable = ['merk', 'seri', 'spesifikasi', 'stok', 'kategori_id'];
 
+    // Relasi ke model Kategori
     public function kategori()
     {
         return $this->belongsTo(Kategori::class, 'kategori_id');
+    }
+
+    // Relasi ke model BarangMasuk
+    public function barangmasuk()
+    {
+        return $this->hasMany(BarangMasuk::class, 'barang_id');
     }
 }
